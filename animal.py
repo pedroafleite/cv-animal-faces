@@ -11,7 +11,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 plt.style.use("seaborn-whitegrid")
 import matplotlib.image as implt
-from PIL import Image 
+from PIL import Image
 import seaborn as sns
 import cv2 as cs2
 import os
@@ -36,20 +36,22 @@ if not os.path.exists(models_dir):
     os.makedirs(models_dir)
 
 #copy the Xception models
-!cp ../input/keras-pretrained-models/xception* ~/.keras/models/
-#show
-!ls ~/.keras/models
+#Source: https://medium.com/analytics-vidhya/image-recognition-using-pre-trained-xception-model-in-5-steps-96ac858f4206
+import tensorflow as tf
+from tensorflow.keras.applications.xception import decode_predictions
+model = tf.keras.applications.xception.Xception(weights='imagenet',include_top=True)
 
-train_path = "../input/animal-faces/afhq/train"
-test_path = "../input/animal-faces/afhq/val"
 
-train_cat = "../input/animal-faces/afhq/train/cat"
-train_dog = "../input/animal-faces/afhq/train/dog"
-train_wild = "../input/animal-faces/afhq/train/wild"
+train_path = "./input/animal-faces/afhq/train"
+test_path = "./input/animal-faces/afhq/val"
 
-test_cat = "../input/animal-faces/afhq/val/cat"
-test_dog = "../input/animal-faces/afhq/val/dog"
-test_wild = "../input/animal-faces/afhq/val/wild"
+train_cat = "./input/animal-faces/afhq/train/cat"
+train_dog = "./input/animal-faces/afhq/train/dog"
+train_wild = "./input/animal-faces/afhq/train/wild"
+
+test_cat = "./input/animal-faces/afhq/val/cat"
+test_dog = "./input/animal-faces/afhq/val/dog"
+test_wild = "./input/animal-faces/afhq/val/wild"
 
 # VISUALIZATION
 category_names = os.listdir(train_path) # output: ['cat', 'dog','wild']
@@ -63,7 +65,7 @@ for category in category_names:
 sns.barplot(y=category_names, x=train_images).set_title("Number Of Training Images Per Category");
 
 
-img = load_img('../input/animal-faces/afhq/train/cat/flickr_cat_000002.jpg')  # this is a PIL image
+img = load_img('./input/animal-faces/afhq/train/cat/flickr_cat_000002.jpg')  # this is a PIL image
 x = img_to_array(img)  # this is a Numpy array 
 print('image shape: ', x.shape)
 
@@ -72,14 +74,14 @@ plt.imshow(img)
 plt.show()
 
 
-img = load_img('../input/animal-faces/afhq/train/dog/flickr_dog_000002.jpg')  # this is a PIL image
+img = load_img('./input/animal-faces/afhq/train/dog/flickr_dog_000002.jpg')  # this is a PIL image
 x = img_to_array(img)  # this is a Numpy array 
 print('Train Dog Image')
 plt.imshow(img)
 plt.show()
 
 
-img = load_img('../input/animal-faces/afhq/train/wild/flickr_wild_000002.jpg')  # this is a PIL image
+img = load_img('./input/animal-faces/afhq/train/wild/flickr_wild_000002.jpg')  # this is a PIL image
 x = img_to_array(img)  # this is a Numpy array 
 print('Train Wild Image')
 plt.imshow(img)
